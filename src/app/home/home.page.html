@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>URL Redirector</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="redirectForm" (submit)="notifyServer(redirectForm.value)">
+    <ion-item>
+      <ion-label color="primary" position="floating">Url</ion-label>
+      <ion-input type="url" formControlName="url"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-checkbox formControlName="redirect" [checked]="redirect"></ion-checkbox>
+      <ion-label class="ion-padding">Redirect</ion-label>
+    </ion-item>
+    <ion-button expand="block" type="submit" [disabled]="redirectForm.value && !redirectForm.valid">Redirect
+    </ion-button>
+
+    <ion-card *ngIf="urlControl.errors && urlControl.dirty && urlControl.errors">
+      <ion-card-header>
+        <ion-card-title>Url error</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        Please enter valid redirect url
+      </ion-card-content>
+    </ion-card>
+
+  </form>
+
+  <ion-card *ngIf="serverError">
+      <ion-card-header>
+        <ion-card-title>Server Errors</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        {{serverError}}
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="availableRedirectUrlsError">
+        <ion-card-header>
+          <ion-card-title>Available Redirect Urls</ion-card-title>
+        </ion-card-header>
+  
+        <ion-card-content>
+            {{availableRedirectUrlsError}}
+        </ion-card-content>
+      </ion-card>
+
+</ion-content>
